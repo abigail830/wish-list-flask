@@ -1,4 +1,6 @@
-from demo.main import db
+from __future__ import absolute_import
+
+from demo import db
 
 
 class User(db.Model):

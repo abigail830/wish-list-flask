@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+
 from flask import render_template
-from demo.main import app
+from demo import app
 
 
 @app.route('/')
@@ -11,3 +13,7 @@ def index():
 def hello():
     user = {'username': 'Sara Qian'}
     return render_template('hello.html', title=app.config['TITLE'], user=user)
+
+
+
+

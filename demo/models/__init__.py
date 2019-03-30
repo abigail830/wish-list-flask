@@ -1,11 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_script import Manager, Shell
-from flask_migrate import Migrate, MigrateCommand
-from demo.main import app
+from __future__ import absolute_import
 
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
+from demo.models.user_model import User
+from demo.models.wish_model import Wish

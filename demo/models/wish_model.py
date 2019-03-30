@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+
 from datetime import datetime
-from demo.main import db
+from demo import db
 
 
 class Wish(db.Model):
