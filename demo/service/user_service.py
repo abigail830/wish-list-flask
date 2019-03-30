@@ -12,3 +12,7 @@ class UserService(object):
     def get_all_user():
         return User.query.all()
 
+    @staticmethod
+    def get_user_by_id(id):
+        return id
+
