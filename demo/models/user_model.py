@@ -23,3 +23,4 @@ class User(db.Model):
     def __repr__(self):
         return 'User {0} [{1}] Birthday {2}'\
             .format(self.username, self.sex, self.birthday)
+

@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
-from demo import log
+from datetime import datetime,date
+
+from demo import log, db
 from demo.models import User, Wish
 
 
@@ -18,26 +20,31 @@ class UserService(object):
         return user_id
 
     @staticmethod
-    def add_wish_for_user(user, wish_description):
+    def add_wish_for_user(self, user, wish_description):
         if user.get('id') is not None:
             return 'Going to check if user exist'
         else:
-            if UserService._valid_user(user):
-                _wish = Wish(wish_description)
-                _new_user = User(user.get('username'), user.get('sex'), user.get('birthday'))
-                _new_user.add_wish(_wish)
-                return 'User data going to insert to DB: \n {0} \n new wish: {1}'.format(_new_user, _wish)
+            if self.__valid_user(user):
+                __wish = Wish(wish_description)
+                y_m_d__date = datetime.strptime(user.get('birthday'), '%y-%m-%d').date()
+                __new_user = User(user.get('username'), user.get('sex'), y_m_d__date)
+                __new_user.add_wish(__wish)
+                log.info('User data going to insert to DB: \n {0} \n new wish: {1}'.format(__new_user, __wish))
+
+                db.session.add(__new_user)
+                db.session.commit()
+                return User.query.all()
             else:
                 return "This is abnormal user"
 
     @staticmethod
-    def _valid_user(user):
+    def __valid_user(user):
 
-        _username = user.get('username')
-        _sex = user.get('sex')
-        _birthday = user.get('birthday')
+        __username = user.get('username')
+        __sex = user.get('sex')
+        __birthday = user.get('birthday')
 
-        if _username is not None and _sex is not None and _birthday is not None:
+        if __username is not None and __sex is not None and __birthday is not None:
             return True
         else:
             return False

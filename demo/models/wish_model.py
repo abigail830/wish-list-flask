@@ -16,3 +16,4 @@ class Wish(db.Model):
 
     def __repr__(self):
         return 'Wish-{0} created at {1}: {2}.'.format(self.id, self.create_date_time, self.description)
+
