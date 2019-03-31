@@ -15,5 +15,11 @@ def hello():
     return render_template('hello.html', title=app.config['TITLE'], user=user)
 
 
+@app.route('/health')
+def health():
+    return "UP"
+
+
+
 
 
