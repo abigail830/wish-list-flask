@@ -1,8 +1,9 @@
 from __future__ import absolute_import
 
 from flask import jsonify, request
+from flask_restplus import Resource
 
-from demo import app, log
+from demo import app, api
 from demo.api.dto_json_encoder import DtoJsonEncoder
 from demo.service import UserService, WishService
 
@@ -46,14 +47,12 @@ def add_wish_for_user(user_id):
     result = wish_service.add_wish_to_user(user_id, __wish)
     return jsonify(result)
 
+#
+# @app.route('/users/<int:user_id>/wishes', methods=['GET'])
+# def query_wish_for_user(user_id):
+#     result = wish_service.query_wish_for_user(user_id)
+#     return jsonify(result)
 
-@app.route('/users/<int:user_id>/wishes', methods=['GET'])
-def query_wish_for_user(user_id):
-    result = wish_service.query_wish_for_user(user_id)
-    return jsonify(result)
 
 
-@app.route('/wishes', methods=['GET'])
-def query_all_wishes():
-    result = wish_service.query_all_wishes()
-    return jsonify(result)
+

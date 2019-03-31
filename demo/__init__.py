@@ -4,6 +4,7 @@ import logging.config
 
 from flask import Flask
 from flask_migrate import Migrate
+from flask_restplus import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
 from demo.config import config
@@ -11,8 +12,13 @@ from demo.config import config
 # define app
 app = Flask(__name__)
 app.config.from_object(config['development'])
+
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
+
+# api = Api(app)
+api = Api(app, title="Flask Demo", description="Users and Wishes CURD api.")
+
 
 # define db
 db = SQLAlchemy(app)
