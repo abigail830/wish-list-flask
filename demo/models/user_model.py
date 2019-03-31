@@ -11,11 +11,11 @@ class User(db.Model):
     birthday = db.Column(db.Date, nullable=False)
     wishes = db.relationship('Wish', backref='user', lazy='dynamic')
 
-    def __init__(self, username, sex, birthday):
-        self.username = username
-        self.sex = sex
-        self.birthday = birthday
-        self.wishes = []
+    # def __init__(self, username, sex, birthday):
+    #     self.username = username
+    #     self.sex = sex
+    #     self.birthday = birthday
+    #     self.wishes = []
 
     def add_wish(self, wish):
         self.wishes.append(wish)

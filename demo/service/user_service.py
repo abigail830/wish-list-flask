@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from datetime import datetime,date
+from datetime import datetime
 
 from demo import log, db
 from demo.models import User, Wish
@@ -17,37 +17,55 @@ class UserService(object):
 
     @staticmethod
     def get_user_by_id(user_id):
-        return user_id
+        return User.query.get(user_id)
 
     @staticmethod
-    def add_wish_for_user(self, user, wish_description):
-        if user.get('id') is not None:
-            return 'Going to check if user exist'
+    def add_user(user):
+        new_user = UserService.construct_new_user(user)
+        if new_user is not None:
+            db.session.add(user)
+            db.session.commit()
+            return User.query.all()
         else:
-            if self.__valid_user(user):
-                __wish = Wish(wish_description)
-                y_m_d__date = datetime.strptime(user.get('birthday'), '%y-%m-%d').date()
-                __new_user = User(user.get('username'), user.get('sex'), y_m_d__date)
-                __new_user.add_wish(__wish)
-                log.info('User data going to insert to DB: \n {0} \n new wish: {1}'.format(__new_user, __wish))
-
-                db.session.add(__new_user)
-                db.session.commit()
-                return User.query.all()
-            else:
-                return "This is abnormal user"
+            # TODO: It should throw exception instead
+            return "Abnormal user: username|sex|birthday should not be null"
 
     @staticmethod
-    def __valid_user(user):
+    def update_user(user):
+        if user.get('id') is not None:
+            exist_user = User.query.get(user.get('id'))
+            UserService.construct_update_user(exist_user, user)
+            db.session.commit()
+            return User.query.all()
 
-        __username = user.get('username')
-        __sex = user.get('sex')
-        __birthday = user.get('birthday')
+    @staticmethod
+    def construct_update_user(exist_user, user):
+        exist_user.username = user.get('username') or exist_user.username
+        exist_user.sex = user.get('sex') or exist_user.sex
+        new_y_m_d__date = datetime.strptime(user.get('birthday'), '%y-%m-%d').date()
+        exist_user.birthday = new_y_m_d__date or exist_user.birthday
 
-        if __username is not None and __sex is not None and __birthday is not None:
+    @staticmethod
+    def valid_user(user):
+        if user.get('username') is not None \
+                and user.get('sex') is not None \
+                and user.get('birthday') is not None:
             return True
         else:
             return False
+
+    @staticmethod
+    def construct_new_user(new_user):
+        if UserService.valid_user(new_user):
+            __username = new_user.get('username')
+            __sex = new_user.get('sex')
+            new_y_m_d__date = datetime.strptime(new_user.get('birthday'), '%y-%m-%d').date()
+            __birthday = new_y_m_d__date
+            return User(username=__username, sex=__sex, birthday=__birthday)
+
+
+
+
 
 
 
