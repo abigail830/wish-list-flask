@@ -23,7 +23,7 @@ class UserService(object):
     def add_user(user):
         new_user = UserService.construct_new_user(user)
         if new_user is not None:
-            db.session.add(user)
+            db.session.add(new_user)
             db.session.commit()
             return User.query.all()
         else:
@@ -62,6 +62,8 @@ class UserService(object):
             new_y_m_d__date = datetime.strptime(new_user.get('birthday'), '%y-%m-%d').date()
             __birthday = new_y_m_d__date
             return User(username=__username, sex=__sex, birthday=__birthday)
+        else:
+            log.warn("invalid user {}".format(new_user))
 
     @staticmethod
     def construct_update_user(exist_user, user):

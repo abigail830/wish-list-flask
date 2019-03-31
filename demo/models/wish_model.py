@@ -11,9 +11,6 @@ class Wish(db.Model):
     create_date_time = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    # def __init__(self, description):
-    #     self.description = description
-
     def __repr__(self):
         return 'Wish-{0} created at {1}: {2}.'.format(self.id, self.create_date_time, self.description)
 
