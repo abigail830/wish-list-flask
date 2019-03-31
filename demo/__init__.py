@@ -19,6 +19,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
-from demo.api import index_api, user_api, health_api
+from demo.api import index_api, user_api
 
 from demo.models import user_model, wish_model
