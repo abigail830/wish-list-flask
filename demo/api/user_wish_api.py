@@ -51,3 +51,9 @@ def add_wish_for_user(user_id):
 def query_wish_for_user(user_id):
     result = wish_service.query_wish_for_user(user_id)
     return jsonify(result)
+
+
+@app.route('/wishes', methods=['GET'])
+def query_all_wishes():
+    result = wish_service.query_all_wishes()
+    return jsonify(result)

@@ -25,3 +25,7 @@ class WishService(object):
     def query_wish_for_user(user_id):
         user_by_id = user_service.get_user_by_id(user_id)
         return user_by_id.wishes.all()
+
+    @staticmethod
+    def query_all_wishes():
+        return Wish.query.all()
