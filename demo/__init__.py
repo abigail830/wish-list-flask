@@ -4,7 +4,7 @@ import logging.config
 
 from flask import Flask
 from flask_migrate import Migrate
-from flask_restplus import Resource, Api
+from flask_restplus import Api
 from flask_sqlalchemy import SQLAlchemy
 
 from demo.config import config
@@ -25,6 +25,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
-from demo.api import index_api, user_wish_api
+from demo.api import index_api, user_api, wish_api, health_api
 
 from demo.models import user_model, wish_model
